@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  nextcloud:
+    restart: always
+    image: nextcloud
+    ports:
+    - 80:80
+    volumes:
+    - ./data/data:/var/www/html/data
+    environment:
+    - MYSQL_DATABASE=nextcloud
+    - MYSQL_USER=nextcloud
+    - MYSQL_PASSWORD=nextcloud
+    - MYSQL_HOST=mariadb
+    
+  mariadb:
+    restart: always
+    image: mariadb:latest
+    volumes:
+    - ./data/mariadb:/var/lib/mysql
+    environment:
+    - MYSQL_ROOT_PASSWORD=rootroot
+    - MYSQL_ROOT_HOST=%
+    - MYSQL_DATABASE=nextcloud
+    - MYSQL_USER=nextcloud
+    - MYSQL_PASSWORD=nextcloud
