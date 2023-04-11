@@ -1,0 +1,46 @@
+---
+- name: Установка Zabbix Web, Nginx и PostgreSQL
+  hosts: host
+  become: true
+
+  tasks:
+    # Установка PostgreSQL
+    - name: Установка PostgreSQL
+      apt:
+        name: postgresql
+        state: present
+
+        - name: Создание базы данных и пользователя для Zabbix
+      postgresql_db:
+        name: zabbix
+        state: present
+        login_user: postgres
+      postgresql_user:
+        name: zabbix
+        password: zabbix
+        login_user: postgres
+        priv: "zabbix.*:ALL"
+
+    - name: Установка Zabbix Web, PHP и Nginx
+      apt:
+        name:
+          - zabbix-web-pgsql
+          - php7.4-pgsql
+          - nginx
+        state: present
+
+    - name: Конфигурация Nginx для Zabbix Web
+      copy:
+        src: conf/nginx.conf
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: '0644'
+     
+
+
+ 
+    - name: Reload Nginx
+      systemd:
+        name: nginx
+        state: reloaded
