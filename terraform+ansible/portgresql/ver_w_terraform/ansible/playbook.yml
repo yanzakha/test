@@ -1,1 +1,17 @@
+---
+- name: Установка PostgreSQL
+  hosts: host
+  become: true
 
+  tasks:
+    - name: Обновить список пакетов
+      apt:
+        update_cache: yes
+
+    - name: Установка PostgreSQL
+      apt:
+        name:
+          - postgresql
+          - postgresql-contrib
+          - libpq-dev
+        state: present
