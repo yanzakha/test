@@ -48,14 +48,11 @@ resource "google_compute_instance" "vm_instance" {
   }
  
 metadata_startup_script = <<SCRIPT
-    #!/bin/bash
-    sudo apt-get update
-
-    # Install Zabbix agent
-    wget https://repo.zabbix.com/zabbix/5.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.4-1+ubuntu20.04_all.deb
-    sudo dpkg -i zabbix-release_5.4-1+ubuntu20.04_all.deb
-    sudo apt-get update
-    sudo apt-get install -y zabbix-agent
-    SCRIPT
+#!/bin/bash
+sudo apt-get update
+sudo apt-get install -y software-properties-common
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+sudo apt-get install -y ansible
+SCRIPT
 }
   
