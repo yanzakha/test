@@ -1,1 +1,1 @@
-Need to do terraform init for all needed code download, then terraform plan and terraform apply.
+Need to do terraform init for download all needed code, then terraform plan and terraform apply.
